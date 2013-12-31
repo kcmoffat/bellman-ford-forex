@@ -42,8 +42,8 @@ public class Graph {
 		return result;
 	}
 	
-	// Return true if graph g contains a negative cycle reachable from s.  
-	// Return false otherwise.
+	// Returns an ArrayList containing a negative cycle in g if one exists.  
+	// Return null otherwise.
 	public static ArrayList<Node> negCycle (Graph g, Node s) {
 		ShortestPaths bf = bellmanFord(g, s);
 		Iterator<Edge> edges = g.getEdges();
