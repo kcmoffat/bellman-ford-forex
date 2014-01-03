@@ -21,6 +21,10 @@ public class Edge {
 		return myEnd;
 	}
 	
+	public void updateWeight (double w) {
+		myWeight = w;
+	}
+	
 	public boolean equals (Object obj) {
 		return this.getStart().equals(((Edge)obj).getStart())
 				&& this.getEnd().equals(((Edge)obj).getEnd());
