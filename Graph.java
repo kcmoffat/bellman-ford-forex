@@ -5,15 +5,15 @@ import java.util.Stack;
 import java.util.HashSet;
 
 public class Graph {
-	private ArrayList<Node> myNodes;
+	private ArrayList<Vertex> myNodes;
 	private ArrayList<Edge> myEdges;
 	
-	public static ShortestPaths bellmanFord (Graph g, Node s) {
+	public static ShortestPaths bellmanFord (Graph g, Vertex s) {
 		
 		// Initialize
 		ShortestPaths result = new ShortestPaths ();
-		Iterator<Node> nodes = g.getNodes();
-		Node next;
+		Iterator<Vertex> nodes = g.getNodes();
+		Vertex next;
 		while (nodes.hasNext()) {
 			next = nodes.next();
 			result.updateDist(next, Double.POSITIVE_INFINITY);
@@ -25,8 +25,8 @@ public class Graph {
 		int V = g.numNodes();
 		Iterator<Edge> edges;
 		Edge e;
-		Node u;
-		Node v;
+		Vertex u;
+		Vertex v;
 		for (int i = 0; i < V-1; i++) {
 			 edges = g.getEdges();
 			 while (edges.hasNext()) {
@@ -44,20 +44,20 @@ public class Graph {
 	
 	// Returns an ArrayList containing a negative cycle in g if one exists.  
 	// Return null otherwise.
-	public static ArrayList<Node> negCycle (Graph g, Node s) {
+	public static ArrayList<Vertex> negCycle (Graph g, Vertex s) {
 		ShortestPaths bf = bellmanFord(g, s);
 		Iterator<Edge> edges = g.getEdges();
-		ArrayList<Node> result = new ArrayList<Node> ();
+		ArrayList<Vertex> result = new ArrayList<Vertex> ();
 		Edge e;
-		Node u;
-		Node v;
+		Vertex u;
+		Vertex v;
 		while (edges.hasNext()) {
 			e = edges.next();
 			u = e.getStart();
 			v = e.getEnd();
 			if (bf.getDist(u) + e.getWeight() < bf.getDist(v)) {
-				Stack<Node> cyc = new Stack<Node> ();
-				HashSet<Node> seen = new HashSet<Node> ();
+				Stack<Vertex> cyc = new Stack<Vertex> ();
+				HashSet<Vertex> seen = new HashSet<Vertex> ();
 				while (!seen.contains(v)) {
 					cyc.push(v);
 					seen.add(v);
@@ -74,11 +74,11 @@ public class Graph {
 	}
 	
 	public Graph () {
-		myNodes = new ArrayList<Node>();
+		myNodes = new ArrayList<Vertex>();
 		myEdges = new ArrayList<Edge>();
 	}
 	
-	public void addNode (Node n) {
+	public void addNode (Vertex n) {
 		myNodes.add(n);
 	}
 	
@@ -86,7 +86,7 @@ public class Graph {
 		myEdges.add(e);
 	}
 	
-	public Iterator<Node> getNodes() {
+	public Iterator<Vertex> getNodes() {
 		return myNodes.iterator();
 	}
 	
@@ -102,10 +102,18 @@ public class Graph {
 		return myEdges.size();
 	}
 	
+	public boolean contains (Vertex n) {
+		return myNodes.contains(n);
+	}
+	
+	public boolean contains (Edge e) {
+		return myEdges.contains(e);
+	}
+	
 	public String toString () {
 		String result = "";
 		if (!myNodes.isEmpty()) {
-			Iterator<Node> nodes = this.getNodes();
+			Iterator<Vertex> nodes = this.getNodes();
 			result += "Nodes:\n";
 			while (nodes.hasNext()) {
 				result += nodes.next() + "\n";

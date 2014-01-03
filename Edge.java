@@ -1,9 +1,9 @@
 public class Edge {
-	private Node myStart;
-	private Node myEnd;
+	private Vertex myStart;
+	private Vertex myEnd;
 	private double myWeight;
 	
-	public Edge (Node s, Node t, double weight) {
+	public Edge (Vertex s, Vertex t, double weight) {
 		myStart = s;
 		myEnd = t;
 		myWeight = weight;
@@ -13,12 +13,17 @@ public class Edge {
 		return myWeight;
 	}
 	
-	public Node getStart () {
+	public Vertex getStart () {
 		return myStart;
 	}
 	
-	public Node getEnd () {
+	public Vertex getEnd () {
 		return myEnd;
+	}
+	
+	public boolean equals (Object obj) {
+		return this.getStart().equals(((Edge)obj).getStart())
+				&& this.getEnd().equals(((Edge)obj).getEnd());
 	}
 	
 	public String toString () {

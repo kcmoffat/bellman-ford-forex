@@ -8,14 +8,14 @@ public class ShortestPathsTest {
 	@Test
 	public void test() {
 		Graph g = new Graph();
-		Node one = new Node("one");
-		Node two = new Node("two");
-		Node three = new Node("three");
-		Node four = new Node("four");
-		Node five = new Node("five");
-		Node six = new Node("six");
-		Node seven = new Node("seven");
-		Node eight = new Node("eight");
+		Vertex one = new Vertex("one");
+		Vertex two = new Vertex("two");
+		Vertex three = new Vertex("three");
+		Vertex four = new Vertex("four");
+		Vertex five = new Vertex("five");
+		Vertex six = new Vertex("six");
+		Vertex seven = new Vertex("seven");
+		Vertex eight = new Vertex("eight");
 		Edge e1 = new Edge(one,two, 4);
 		Edge e2 = new Edge(one,four, 4);
 		Edge e3 = new Edge(three,one, 3);
@@ -50,10 +50,10 @@ public class ShortestPathsTest {
 		g.addEdge(e11);
 		g.addEdge(e12);
 		g.addEdge(e13);
-		//ShortestPaths result = Graph.bellmanFord(g, one);
+		ShortestPaths result = Graph.bellmanFord(g, one);
 		//System.out.print(g);
-		//System.out.print(result);
-		ArrayList<Node> cycle = Graph.negCycle(g, one);
+		System.out.print(result);
+		ArrayList<Vertex> cycle = Graph.negCycle(g, one);
 		System.out.println(cycle);
 		fail("Not yet implemented");
 	}
