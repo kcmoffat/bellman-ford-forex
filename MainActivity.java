@@ -24,7 +24,8 @@ public class MainActivity {
 		while (true) {
 		
 			Graph g = new Graph();
-			Vertex s = null;
+			Vertex s = new Vertex("USD");
+			g.addNode(s);
 			CloseableHttpClient httpclient = HttpClients.createDefault();
 			String urlString = "http://rates.fxcm.com/RatesXML";
 			HttpGet httpget = new HttpGet(urlString);
@@ -42,37 +43,29 @@ public class MainActivity {
 					Node nNode = nList.item(i);					
 					Element eElement = (Element) nNode;
 
-					try {
-						String from = eElement.getAttribute("Symbol").substring(0, 3);
-						String to = eElement.getAttribute("Symbol").substring(3, 6);
-						Double ask = Double.parseDouble(eElement.getElementsByTagName("Ask").item(0).getTextContent());
-						Double bid = Double.parseDouble(eElement.getElementsByTagName("Bid").item(0).getTextContent());
-						Vertex u = new Vertex(from);
-						Vertex v = new Vertex(to);
-						Edge e1 = new Edge(u, v, -Math.log(bid));
-						Edge e2 = new Edge(v, u, -Math.log(1/ask));
-						
-						if (!g.contains(u)) {
-							if (from.equals("USD")) {
-								s = u;
-							}
-							g.addNode(u);
-						}
-						if (!g.contains(v)) {
-							if (to.equals("USD")) {
-								s = v;
-								e2.updateWeight(e2.getWeight());
-							}
-							g.addNode(v);
-						}
-						if (!g.contains(e1)) {
-							g.addEdge(e1);
-						}
-						if (!g.contains(e2)) {
-							g.addEdge(e2);
-						}
-					} catch (Exception e) {
-						// do nothing
+					String from = eElement.getAttribute("Symbol").substring(0, 3);
+					String to = eElement.getAttribute("Symbol").substring(3, 6);
+					Double ask = Double.parseDouble(eElement.getElementsByTagName("Ask").item(0).getTextContent());
+					Double bid = Double.parseDouble(eElement.getElementsByTagName("Bid").item(0).getTextContent());
+					Vertex u = new Vertex(from);
+					Vertex v = new Vertex(to);
+					
+					// setting edges weights to -log of exchange rate transforms 
+					// problem from max product of rates to shortest paths 
+					Edge e1 = new Edge(u, v, -Math.log(bid));
+					Edge e2 = new Edge(v, u, -Math.log(1/ask));
+					
+					if (!g.contains(u)) {
+						g.addNode(u);
+					}
+					if (!g.contains(v)) {
+						g.addNode(v);
+					}
+					if (!g.contains(e1)) {
+						g.addEdge(e1);
+					}
+					if (!g.contains(e2)) {
+						g.addEdge(e2);
 					}
 				}
 			} catch (Exception e) {
@@ -86,7 +79,7 @@ public class MainActivity {
 				System.out.println(result);
 			}
 			try {
-				Thread.sleep(1000);
+				//Thread.sleep(1000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
