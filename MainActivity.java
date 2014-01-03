@@ -18,7 +18,9 @@ import org.w3c.dom.Element;
 
 public class MainActivity {
 	public static void main(String[] args) {
+		
 		System.out.print("Running Negative Cycle Detector.");
+		
 		while (true) {
 		
 			Graph g = new Graph();
@@ -37,12 +39,9 @@ public class MainActivity {
 				NodeList nList = doc.getElementsByTagName("Rate");
 				
 				for (int i = 0; i < nList.getLength(); i++) {
-					Node nNode = nList.item(i);
-					
-					//System.out.println("Current element: " + nNode.getNodeName());
-					
+					Node nNode = nList.item(i);					
 					Element eElement = (Element) nNode;
-					//System.out.println("Currency: " + eElement.getAttribute("Symbol"));
+
 					try {
 						String from = eElement.getAttribute("Symbol").substring(0, 3);
 						String to = eElement.getAttribute("Symbol").substring(3, 6);
@@ -62,6 +61,7 @@ public class MainActivity {
 						if (!g.contains(v)) {
 							if (to.equals("USD")) {
 								s = v;
+								e2.updateWeight(e2.getWeight());
 							}
 							g.addNode(v);
 						}
@@ -76,9 +76,8 @@ public class MainActivity {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				// do nothing
 			}
-			//System.out.println(g);
 			
 			ArrayList<Vertex> result = Graph.negCycle(g, s); 
 			if (result.isEmpty()) {
@@ -87,9 +86,8 @@ public class MainActivity {
 				System.out.println(result);
 			}
 			try {
-				//Thread.sleep(1000);
+				Thread.sleep(1000);
 			} catch (Exception e) {
-				// do nothing
 				e.printStackTrace();
 			}
 		}

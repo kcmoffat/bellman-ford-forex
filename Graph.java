@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.AbstractList;
 import java.util.Stack;
 import java.util.HashSet;
 
@@ -21,6 +20,7 @@ public class Graph {
 		}
 		
 		result.updateDist(s, 0);
+		
 		// Perform |V|-1 updates of all edges
 		int V = g.numNodes();
 		Iterator<Edge> edges;
