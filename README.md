@@ -9,3 +9,6 @@ Dependencies:
 org.apache.http (http://hc.apache.org/)
 org.w3c.dom (http://docs.oracle.com/javase/7/docs/api/org/w3c/dom/package-summary.html)
 javax.xml.parsers (http://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/package-summary.html)
+
+To run:
+In Eclipse, run Main.java to run negative cycle detection every second against the XML feed.
