@@ -75,6 +75,6 @@ public class ShortestPathsTest {
 		}
 		
 		// Print the cycle
-		//System.out.println(cycle);
+		System.out.println(cycle);
 	}
 }
