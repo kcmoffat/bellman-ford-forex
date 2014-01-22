@@ -50,15 +50,14 @@ public class ShortestPathsTest {
 		g.addEdge(e11);
 		g.addEdge(e12);
 		g.addEdge(e13);
-		ShortestPaths result = Graph.bellmanFord(g, one);
 		//System.out.print(g);
-		//System.out.print(result);
+		
 		ArrayList<Vertex> cycle = Graph.negCycle(g, one);
 
 		// This graph should have a cycle
 		assertNotNull(cycle);
 		
-		// We expect this graph to contain the cycle 6->7->5
+		// This graph should contain the cycle 6->7->5
 		assertTrue(cycle.contains(six));
 		assertTrue(cycle.contains(seven));
 		assertTrue(cycle.contains(five));
@@ -68,10 +67,19 @@ public class ShortestPathsTest {
 		assertTrue(cycle.contains(one));
 		
 		// Make sure the sequence of vertices returned
-		// actually form edges in the graph
+		// actually form edges in the graph,
+		Vertex last = null;
 		for (int i = 0; i < cycle.size()-1; i++) {
 			Edge tmp = new Edge(cycle.get(i), cycle.get(i+1), 0); // weight doesn't matter here for Edge.equals()
 			assertTrue(g.contains(tmp));
+			
+			// Make sure the returned cycle is actually a path
+			if (last == null) {
+				last = cycle.get(i+1);
+			} else {
+				assertEquals(last, cycle.get(i));
+				last = cycle.get(i+1);
+			}
 		}
 		
 		// Print the cycle
